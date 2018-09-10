@@ -1,16 +1,5 @@
 # react-native-login-keycloak
-This is a fork of ak1394's React-Native-Login module. It's a version that I'm planning to maintenance more than it's been with ak1394.
-
-## Documentation
-
-- [Install](https://github.com/mahomahoxd/react-native-login#install)
-- [Usage](https://github.com/mahomahoxd/react-native-login#usage)
-
-## Install
-
-```shell
-npm i --save react-native-login-keycloak
-```
+This is a fork of mahomahoxd react-native-login-keycloak module. This version implements auth processo without browser linking.
 
 ## Usage
 
@@ -47,8 +36,9 @@ const config = {
   url: 'https://<KEYCLOAK_HOST>/auth',
   realm: '<REALM NAME>',
   clientId: '<CLIENT ID>',
-  redirectUri: 'https://<REDIRECT HOST>/success.html',
-  appsiteUri: 'https://<APPSITE HOST>/app.html',
+  username: '<USERNAME>',
+  password: '<PASSWORD>',
+  clientSecret: '<CLIENT_SECRET>',
   kcIdpHint: 'facebook', // *optional*
 };
 
