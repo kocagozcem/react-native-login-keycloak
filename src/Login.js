@@ -32,14 +32,23 @@ export class Login {
     startLoginProcess(conf) {
       this.setConf(conf);
       return new Promise(((resolve, reject) => {
-        const { url, state } = this.getLoginURL();
-        this.state = {
-          ...this.state,
-          resolve,
-          reject,
-          state,
-        };
-        Linking.openURL(url);
+        const { url } = this.getLoginURL();
+
+        fetch(url, { 
+          method: 'POST',
+          body: querystring.stringify({
+            grant_type: 'password',
+            username: conf.username,
+            password: conf.password,
+            client_secret: conf.clientSecret,
+            client_id: conf.clientId
+          }),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          } 
+        }).then((response) => response.json())
+          .then(response => resolve(response))
+          .catch(e => reject(e))
       }));
     }
 
@@ -153,19 +162,9 @@ export class Login {
     }
 
     getLoginURL() {
-      const { redirectUri, clientId, kcIdpHint } = this.conf;
-      const responseType = 'code';
       const state = uuidv4();
       const scope = 'openid';
-      const url = `${this.getRealmURL()}/protocol/openid-connect/auth?${querystring.stringify({
-        scope,
-        kc_idp_hint: kcIdpHint,
-        redirect_uri: redirectUri,
-        client_id: clientId,
-        response_type: responseType,
-        state,
-      })}`;
-
+      const url = `${this.getRealmURL()}/protocol/openid-connect/token`
       return {
         url,
         state,
