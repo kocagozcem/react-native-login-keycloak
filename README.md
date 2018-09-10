@@ -1,5 +1,5 @@
 # react-native-login-keycloak
-This is a fork of mahomahoxd react-native-login-keycloak module. This version implements auth processo without browser linking.
+This is a fork of mahomahoxd react-native-login-keycloak module. This version implements auth process without browser linking.
 
 ## Usage
 
