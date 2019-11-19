@@ -14,15 +14,11 @@
     "auth",
     "login",
     "keycloak",
-    "facebook",
-    "google",
     "oauth",
-    "social",
-    "openid"
+    "openid",
+    "react-native"
   ],
-  "author": [
-    "Cem Kocagoz"
-  ],
+  "author": "ckocagoz",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mahomahoxd/react-native-login-keycloak/issues"
