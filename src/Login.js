@@ -10,7 +10,6 @@ export class Login {
     constructor() {
       this.state = {};
       this.onOpenURL = this.onOpenURL.bind(this);
-      Linking.addEventListener('url', this.onOpenURL);
 
       this.props = {
         requestOptions: {
@@ -47,7 +46,7 @@ export class Login {
             'Content-Type': 'application/x-www-form-urlencoded',
           } 
         }).then((response) => response.json())
-          .then(response => resolve(response))
+          .then(response => { this.tokenStorage.saveTokens(response); resolve(response)})
           .catch(e => reject(e))
       }));
     }
@@ -81,15 +80,13 @@ export class Login {
       return false;
     }
 
-    onOpenURL(event) {
-      if (event.url.startsWith(this.conf.appsiteUri)) {
-        const {
-          state,
-          code,
-        } = querystring.parse(querystring.extract(event.url));
-        if (this.state.state === state) {
-          this.retrieveTokens(code);
-        }
+    onOpenURL(event) { 
+      const {
+        state,
+        code,
+      } = querystring.parse(querystring.extract(event.url));
+      if (this.state.state === state) {  
+        this.retrieveTokens(code);
       }
     }
 
@@ -124,6 +121,7 @@ export class Login {
         this.setRequestOptions('GET');
 
         const fullResponse = await fetch(this.props.url, this.props.requestOptions);
+        
         if (fullResponse.ok) {
           return fullResponse.json();
         }
